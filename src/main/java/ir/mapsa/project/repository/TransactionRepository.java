@@ -40,6 +40,7 @@ public class TransactionRepository implements BaseRepository<Transaction> {
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
+            //handle exceptions
             e.printStackTrace();
         }
     }
