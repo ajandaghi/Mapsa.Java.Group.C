@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TransactionService implements TransactionServiceBase {
+    // transction issue has remained. how can we fix it ???
     TransactionRepository transactionRepository;
     CustomerRepository customerRepository;
 
@@ -25,10 +26,12 @@ public class TransactionService implements TransactionServiceBase {
         }
 
          deposit(transaction.getRecieverCardNumber(),transaction.getAmount());
+        // deposit can be failed ...
         transactionRepository.add(transaction);
     }
-
+    // throw the exact exception
     private Boolean withdraw(String cardNumber,Long amount) throws Exception {
+        //bad practice to get all customers and find the one you needed.
         List<Customer> customers;
         customers=customerRepository.getAll();
         Customer customer=customers.stream().filter(a->a.getCardNo().equals(cardNumber)).findFirst().get();
@@ -40,7 +43,7 @@ public class TransactionService implements TransactionServiceBase {
         customerRepository.update(customer);
         return true;
     }
-
+       
     private Boolean deposit(String cardNumber,Long amount) throws Exception {
         List<Customer> customers;
         customers=customerRepository.getAll();
