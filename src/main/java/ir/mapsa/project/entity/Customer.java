@@ -1,5 +1,5 @@
 package ir.mapsa.project.entity;
-
+//not entity but customers
 public class Customer {
     Integer id;
     String firstName;
