@@ -199,39 +199,40 @@ import java.util.stream.Collectors;
             List<T> result = new ArrayList<>();
             for (int i = 0; i < methods.size(); i++) {
                 if (methods.get(i).getName().contains("get") && methods.get(i).invoke(t, null) != null) {
-                    if(i==0)
-                    query += "AND "+ methods.get(i).getName().replace("get", "").toLowerCase() + " =?";
+                    if (i == 0)
+                        query += "AND " + methods.get(i).getName().replace("get", "").toLowerCase() + " =?";
                     else
-                    query += " Or "+ methods.get(i).getName().replace("get", "").toLowerCase() + " =?";
+                        query += " Or " + methods.get(i).getName().replace("get", "").toLowerCase() + " =?";
 
 
                 }
 
             }
 
-            PreparedStatement statement = getConnection().prepareStatement(query);
-            j = 1;
-            for (int i = 0; i < methods.size(); i++) {
-                if(methods.get(i).getName().contains("get")) {
-                    if (methods.get(i).getReturnType().equals(String.class) && methods.get(i).invoke(t, null) != null) {
-                        statement.setString(j++, (String) methods.get(i).invoke(t, null));
-                    } else if (methods.get(i).getReturnType().equals(Integer.class) && methods.get(i).invoke(t, null) != null) {
-                        statement.setInt(j++, (Integer) methods.get(i).invoke(t, null));
-                    } else if (methods.get(i).getReturnType().equals(Long.class) && methods.get(i).invoke(t, null) != null) {
-                        statement.setLong(j++, (Long) methods.get(i).invoke(t, null));
+            try (PreparedStatement statement = getConnection().prepareStatement(query)) {
+                j = 1;
+                for (int i = 0; i < methods.size(); i++) {
+                    if (methods.get(i).getName().contains("get")) {
+                        if (methods.get(i).getReturnType().equals(String.class) && methods.get(i).invoke(t, null) != null) {
+                            statement.setString(j++, (String) methods.get(i).invoke(t, null));
+                        } else if (methods.get(i).getReturnType().equals(Integer.class) && methods.get(i).invoke(t, null) != null) {
+                            statement.setInt(j++, (Integer) methods.get(i).invoke(t, null));
+                        } else if (methods.get(i).getReturnType().equals(Long.class) && methods.get(i).invoke(t, null) != null) {
+                            statement.setLong(j++, (Long) methods.get(i).invoke(t, null));
+                        }
                     }
+
+
                 }
 
+              try(ResultSet resultSet = statement.executeQuery()){
 
+                while (resultSet.next()) {
+                    T a = getObject(resultSet);
+                    result.add(a);
+                }
             }
-
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                T a = getObject(resultSet);
-                result.add(a);
-            }
-
+        }
               return result;
         }
 

@@ -13,7 +13,7 @@ public abstract class AbstractController<E extends  Student> {
 
     public Repository<Student> repository=new Repository<>(Student.class);
 
-    @PostMapping()
+    @PostMapping("")
     public void add(@RequestBody E e) throws Exception {
         repository.add(e);
     }
