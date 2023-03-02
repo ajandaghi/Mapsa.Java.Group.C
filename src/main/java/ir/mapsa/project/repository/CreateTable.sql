@@ -6,7 +6,9 @@ CREATE TABLE customer (
         lastName nvarchar(100),
         age int,
         balance long,
-        cardNo nvarchar(19)
+        cardNo nvarchar(19),
+        email nvarchar(100),
+        cell  char(10)
 
 );
 

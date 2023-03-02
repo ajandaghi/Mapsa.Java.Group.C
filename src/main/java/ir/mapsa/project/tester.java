@@ -7,7 +7,6 @@ import ir.mapsa.project.service.TransactionService;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
 
 public class tester {
     public static void main(String[] args) throws Exception {
@@ -17,6 +16,8 @@ public class tester {
         customer1.setCardNo("1234 1234 1234 1234");
         customer1.setAge(22);
         customer1.setBalance(40000L);
+        customer1.setEmail("ali.jandaghi.6161@gmail.com");
+        customer1.setPhone("000000000");
 
         CustomerRepository customerRepository=new CustomerRepository();
         customerRepository.add(customer1);
@@ -27,6 +28,9 @@ public class tester {
         customer2.setCardNo("4321 4321 4321 4321");
         customer2.setAge(34);
         customer2.setBalance(50000L);
+        customer2.setEmail("rayanelectronictech@gmail.com");
+        customer2.setPhone("000000000");
+
         customerRepository.add(customer2);
 
         Transaction transaction=new Transaction();

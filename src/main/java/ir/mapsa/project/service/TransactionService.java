@@ -5,17 +5,18 @@ import ir.mapsa.project.entity.Transaction;
 import ir.mapsa.project.repository.CustomerRepository;
 import ir.mapsa.project.repository.TransactionRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TransactionService implements TransactionServiceBase {
     TransactionRepository transactionRepository;
     CustomerRepository customerRepository;
 
+    NotifyService notifyService;
+
     public TransactionService() {
         transactionRepository=new TransactionRepository();
         customerRepository=new CustomerRepository();
+        notifyService=new NotifyService();
     }
 
     @Override
@@ -26,6 +27,8 @@ public class TransactionService implements TransactionServiceBase {
 
          deposit(transaction.getRecieverCardNumber(),transaction.getAmount());
         transactionRepository.add(transaction);
+        notifyService.notify(transaction,NotifyType.EMAIL);
+
     }
 
     private Boolean withdraw(String cardNumber,Long amount) throws Exception {

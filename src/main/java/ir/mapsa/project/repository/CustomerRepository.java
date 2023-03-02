@@ -9,7 +9,7 @@ import java.util.List;
 public class CustomerRepository implements BaseRepository<Customer> {
 
     public void add(Customer customer) throws Exception {
-        executeUpdateQuery("insert into customer(firstName, lastName, age, balance, cardNo) values (?,?,?,?,?)", customer);
+        executeUpdateQuery("insert into customer(firstName, lastName, age, balance, cardNo, cell, email) values (?,?,?,?,?,?,?)", customer);
     }
 
     private void executeUpdateQuery(String query,Customer customer) throws Exception {
@@ -20,9 +20,11 @@ public class CustomerRepository implements BaseRepository<Customer> {
                 statement.setInt(3, customer.getAge());
                 statement.setLong(4, customer.getBalance());
                 statement.setString(5, customer.getCardNo());
+                statement.setString(6, customer.getPhone());
+                statement.setString(7, customer.getEmail());
 
                 if (customer.getId() != null) {
-                    statement.setLong(6, customer.getId());
+                    statement.setLong(8, customer.getId());
                 }
                 statement.executeUpdate();
             }
@@ -32,7 +34,7 @@ public class CustomerRepository implements BaseRepository<Customer> {
     }
 
     public void update(Customer customer) throws Exception {
-        executeUpdateQuery("update customer set firstName=?, lastName=?, age=?,  balance=?, cardNo=?\n" +
+        executeUpdateQuery("update customer set firstName=?, lastName=?, age=?,  balance=?, cardNo=?, cell=?, email=?\n" +
                 "where id=?",customer);
     }
 
@@ -78,6 +80,9 @@ public class CustomerRepository implements BaseRepository<Customer> {
         customer.setAge(resultSet.getInt("age"));
         customer.setBalance(resultSet.getLong("balance"));
         customer.setCardNo(resultSet.getString("cardNo"));
+        customer.setPhone(resultSet.getString("cell"));
+        customer.setEmail(resultSet.getString("Email"));
+
 
 
         return customer;

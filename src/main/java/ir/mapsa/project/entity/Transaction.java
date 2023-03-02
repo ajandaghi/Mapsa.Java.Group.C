@@ -3,11 +3,11 @@ package ir.mapsa.project.entity;
 import java.sql.Date;
 
 public class Transaction {
-    Integer Id;
-    Date date;
-    String senderCardNumber;
-    String recieverCardNumber;
-    Long amount;
+    private Integer Id;
+    private Date date;
+    private String senderCardNumber;
+    private String recieverCardNumber;
+    private Long amount;
 
 
     public Integer getId() {
@@ -48,5 +48,16 @@ public class Transaction {
 
     public void setAmount(Long amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "Id=" + Id +
+                ", date=" + date +
+                ", senderCardNumber='" + senderCardNumber + '\'' +
+                ", recieverCardNumber='" + recieverCardNumber + '\'' +
+                ", amount=" + amount +
+                '}';
     }
 }
