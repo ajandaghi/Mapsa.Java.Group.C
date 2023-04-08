@@ -1,6 +1,7 @@
 package com.example.paymentta.controller;
 
 
+import com.example.paymentta.convertor.CustomerConvertor;
 import com.example.paymentta.dto.CustomerDto;
 import com.example.paymentta.entity.Customer;
 import com.example.paymentta.exceptions.ServiceException;
@@ -15,13 +16,18 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private CustomerConvertor customerConvertor;
+
 
     @PostMapping("/add")
-    public void add(@RequestBody CustomerDto customer) {
+    public void add(@RequestBody CustomerDto customerDto) {
 
-        customerService.insert(customer);
+        customerService.insert(customerDto);
 
     }
+
+
 
     @GetMapping("/{id}")
     public Customer get(@PathVariable("id") Long id) throws ServiceException {
@@ -34,16 +40,12 @@ public class CustomerController {
         customerService.update(customer);
     }
 
-    @GetMapping("card/{cardNumber}")
-    public long getBalance(@PathVariable("cardNumber") String card) throws ServiceException {
 
-        return customerService.accountBalance(card);
-    }
     @GetMapping("/test")
     public void test() throws ServiceException {
         //add(new CustomerDto(null,"reza","rahim",21,"1",190l));
-        update(new CustomerDto(1l,"h1","damirchi",20,"2",191l,"123456"));
-        System.out.println("successfuly");
+//        update(new CustomerDto(1l,"h1","damirchi",20,191l,"123456"));
+//        System.out.println("successfuly");
 
     }
 

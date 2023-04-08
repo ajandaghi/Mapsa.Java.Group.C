@@ -1,30 +1,23 @@
-package com.example.paymentta.entity;
+package com.example.paymentta.dto;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.ToString;
-import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
 
-@MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
-@Data
-public abstract class AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@Data
+public abstract class AbstractDto {
+
+
     private Long id;
 
-    @Version
     private Integer version;
 
-    @CreatedDate
     private Date insertTimestamp;
 
-    @LastModifiedDate
     private Date lastUpdateTimestamp;
 }

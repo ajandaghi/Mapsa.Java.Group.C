@@ -6,25 +6,24 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.List;
-import java.util.Objects;
-
 @Entity
 @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 @Data
 @EntityListeners(AuditingEntityListener.class)
-public class Customer extends AbstractEntity {
+public class Account extends AbstractEntity{
 
+    private String accountNumber;
 
-    private String firstName;
-    private String lastName;
-    private Integer age;
-    private String customerNo;
+    @Enumerated(EnumType.STRING)
+    private AccountType accountType;
 
-    @OneToMany(mappedBy = "customer")
-    private List<Account> accounts;
+    @ManyToOne
+    private Customer customer;
 
+    private Long balance;
 
+    @OneToOne(mappedBy = "account")
+    private Card card;
 
 
 

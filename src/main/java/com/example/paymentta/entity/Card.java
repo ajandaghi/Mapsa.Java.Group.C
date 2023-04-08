@@ -1,31 +1,26 @@
 package com.example.paymentta.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.Date;
 
 @Entity
 @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 @Data
 @EntityListeners(AuditingEntityListener.class)
-public class Customer extends AbstractEntity {
+public class Card extends AbstractEntity{
+   private String cardNumber;
+   private String cvv2;
+   private Date expDate;
 
-
-    private String firstName;
-    private String lastName;
-    private Integer age;
-    private String customerNo;
-
-    @OneToMany(mappedBy = "customer")
-    private List<Account> accounts;
-
-
-
-
+   @OneToOne
+   private Account account ;
 
 }
