@@ -18,7 +18,7 @@ public class PasswordService {
         synchronized (OBJ) {
             if (pass2.get(cardNo) == null || (new Date()).getTime() - (pass2.get(cardNo).getDate().getTime()) > 120000) {
 
-                int number = (int) Math.round(100000*Math.random()+899999);
+                int number = (int) Math.round(899999*Math.random()+100000);
 
                 // this will convert any number sequence into 6 character.
               pass2.put(cardNo,new PassDate(String.valueOf(number),new Date()));
